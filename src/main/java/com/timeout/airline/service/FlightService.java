@@ -64,9 +64,9 @@ public class FlightService {
 	}
 	
 	//for booking
-	public List<Flight> searchFlights(String departureCode, String arrivalCode) {
-	    return flightRepo.findByDepartureAirportCodeAndArrivalAirportCode(departureCode, arrivalCode);
-	}
+//	public List<Flight> searchFlights(String departureCode, String arrivalCode) {
+//	    return flightRepo.findByDepartureAirportCodeAndArrivalAirportCode(departureCode, arrivalCode);
+//	}
 	
 	//UPDATE
 	public Flight updateFlight(Long id, Flight flightInfo) {

@@ -15,9 +15,9 @@ public class PlaneService {
 	@Autowired
 	private PlaneRepository planeRepo;
 	
-	public Plane createPlane(Long id, Plane plane) {
+	public Plane createPlane(Plane plane) {
 		if (plane.getCapacity() <= 0) {
-			throw new IllegalArgumentException("Plane must havea greater capcity");
+			throw new IllegalArgumentException("Plane must have a greater capcity");
 		}
 		return planeRepo.save(plane);
 	}

@@ -13,5 +13,5 @@ public interface FlightRepository extends JpaRepository <Flight, Long> {
     List<Flight> findByDepartureAirportCode(String code);
     List<Flight> findByArrivalAirportCode(String code);
 	//for booking
-    List<Flight> findByDepartureAirportCodeAndArrivalAirportCode(String departureCode, String arrivalCode);
+//    List<Flight> findByDepartureAirportCodeAndArrivalAirportCode(String departureCode, String arrivalCode);
 }
