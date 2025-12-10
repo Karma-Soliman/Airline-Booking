@@ -27,7 +27,7 @@ public class PlaneController {
 		return ResponseEntity.ok(planes);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<Plane> getPlaneById(@PathVariable Long id){
 		Plane plane = planeService.getPlaneById(id);
 		return ResponseEntity.ok(plane);

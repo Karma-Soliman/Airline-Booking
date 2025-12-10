@@ -1,8 +1,10 @@
 package com.timeout.airline.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,30 +31,46 @@ public class FlightController {
 			
 		}
 		
-		@GetMapping("/{id}")
+		@GetMapping("/id/{id}")
 		public ResponseEntity<Flight> getFlightById(@PathVariable Long id){
 			Flight flight = flightService.getFlightById(id);
 			return ResponseEntity.ok(flight);
 		} 
 		
-		@GetMapping("/{code}")
+		@GetMapping("/number/{code}")
 		public ResponseEntity<Flight> getFlightByNumber(@PathVariable String code){
 			Flight flightCode = flightService.getFlightByNumber(code);
 			return ResponseEntity.ok(flightCode);
 		} 
 		
-		@GetMapping
+		@GetMapping("/departure/{code}")
 		public ResponseEntity<List<Flight>> getByDepartureAirport(@PathVariable String code){
 			List<Flight> flightDepart = flightService.getByDepartureAirport(code);
 			return ResponseEntity.ok(flightDepart);
 			
 		}
 		
-		@GetMapping
+		@GetMapping("/arrival/{code}")
 		public ResponseEntity<List<Flight>> getByArrivalAirport(@PathVariable String code){
 			List<Flight> flightArrival = flightService.getByArrivalAirport(code);
 			return ResponseEntity.ok(flightArrival);
-			
+		}
+		
+		//FOR BOOKING LATER
+	// GET /api/flight/search?departureCity=Paris&arrivalCity=London&departureDate=2024-12-15
+		@GetMapping("/search")
+		public ResponseEntity<List<Flight>> searchFlights(@RequestParam String departureCity, @RequestParam String arrivalCity, 
+				@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate){ 
+			//this is for spring to properly comprehend that it is 
+			List<Flight> flights = flightService.searchFlights(departureCity, arrivalCity, departureDate);
+			return ResponseEntity.ok(flights);
+		}
+		
+		@GetMapping("/search")
+		public ResponseEntity<List<Flight>> searchFlights(@RequestParam String from, 
+										@RequestParam String to){
+			List<Flight> flightsByCodes = flightService.searchFlightsByCode(from, to);
+			return ResponseEntity.ok(flightsByCodes);
 		}
 		
 		@PutMapping("/{id}")

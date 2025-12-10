@@ -1,5 +1,6 @@
 package com.timeout.airline.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,10 +64,15 @@ public class FlightService {
 	    return flightRepo.findByArrivalAirportCode(code);
 	}
 	
-	//for booking
-//	public List<Flight> searchFlights(String departureCode, String arrivalCode) {
-//	    return flightRepo.findByDepartureAirportCodeAndArrivalAirportCode(departureCode, arrivalCode);
-//	}
+	//for booking and search feature
+	public List<Flight> searchFlightsByCode(String departureCode, String arrivalCode) {
+	    return flightRepo.findByDepartureAirportCodeAndArrivalAirportCode(departureCode, arrivalCode);
+	}
+	//search feature for city and date
+	public List<Flight> searchFlights(String departureCity, String arrivalCity, LocalDate departureDate) {
+	    return flightRepo.findByDepCityAndArrivalCityAndDepDate(departureCity, arrivalCity, departureDate );
+	}	
+	
 	
 	//UPDATE
 	public Flight updateFlight(Long id, Flight flightInfo) {
