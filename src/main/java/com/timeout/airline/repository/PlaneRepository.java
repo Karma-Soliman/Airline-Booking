@@ -12,6 +12,7 @@ import com.timeout.airline.entity.Plane;
 @Repository
 public interface PlaneRepository extends JpaRepository <Plane, Long> {
 	Optional<Plane> findById(Long idPlane);
+	Optional<Plane> findByType(String type);
 //	@Query("Select distinct p from Plane p where p.idPlane not in "
 //			+ "(select f.plane.Idplane from Flight f where f.departureTime < :end and f.arrivalTime > :start)")
 //	List<Plane> findAvailablePlanes(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);

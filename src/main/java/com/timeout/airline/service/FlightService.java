@@ -1,41 +1,71 @@
 package com.timeout.airline.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.timeout.airline.dto.FlightDto;
+import com.timeout.airline.entity.Airport;
 import com.timeout.airline.entity.Flight;
+import com.timeout.airline.entity.Plane;
 import com.timeout.airline.exception.ResourceNotFoundException;
+import com.timeout.airline.repository.AirportRepository;
 import com.timeout.airline.repository.FlightRepository;
+import com.timeout.airline.repository.PlaneRepository;
 
 @Service
 public class FlightService {
 	
 	@Autowired
+	private AirportRepository airportRepo;
+	
+	@Autowired
+	private PlaneRepository planeRepo;
+	
+	@Autowired
 	private FlightRepository flightRepo;
 	
 	//CREATE
-	public Flight createFlight(Flight flight) {
+	public Flight createFlight(FlightDto dto) {
+		
+	    Airport departure = airportRepo.findByCode(dto.departureAirportCode)
+	            .orElseThrow(() -> new IllegalArgumentException("Invalid departure airport code: " + dto.departureAirportCode));
+
+	        Airport arrival = airportRepo.findByCode(dto.arrivalAirportCode)
+	            .orElseThrow(() -> new IllegalArgumentException("Invalid arrival airport code: " + dto.arrivalAirportCode));
+
+	        Plane plane = planeRepo.findByType(dto.planeType)
+	            .orElseThrow(() -> new IllegalArgumentException("Invalid plane type: " + dto.planeType));
+
+	        Flight flight = new Flight();
+
+	        flight.setFlightNumber(dto.flightNumber);
+	        flight.setDepartureAirport(departure);
+	        flight.setArrivalAirport(arrival);
+	        flight.setPlane(plane);
+	        flight.setDepartureTime(dto.departureTime);
+	        flight.setArrivalTime(dto.arrivalTime);
 
 	// 1. check flight number is unique
-		if (flightRepo.findByFlightNumber(flight.getFlightNumber()).isPresent()) {
-	        throw new IllegalArgumentException("Flight number already exists: " + flight.getFlightNumber());
+		if (flightRepo.findByFlightNumber(dto.flightNumber).isPresent()) {
+	        throw new IllegalArgumentException("Flight number already exists: " + dto.flightNumber);
 	    }
 	    
 	// 2. validate times
-	    if (flight.getDepartureTime().isAfter(flight.getArrivalTime())) {
+	    if (dto.departureTime.isAfter(dto.arrivalTime)) {
 	        throw new IllegalArgumentException("Departure time must be before arrival time");
 	    }
 	    
 	// 3. validate airports are different
-	    if (flight.getDepartureAirport().getIdAirport().equals(flight.getArrivalAirport().getIdAirport())) {
+	    if (departure.getIdAirport().equals(arrival.getIdAirport())) {
 	        throw new IllegalArgumentException("Departure and arrival airports must be different");
 	    }
 	    
 	// 4. calculate duration
-	    long minutes = java.time.Duration.between(flight.getDepartureTime(), flight.getArrivalTime()).toMinutes();
+	    long minutes = java.time.Duration.between(dto.departureTime, dto.arrivalTime).toMinutes();
 	    flight.setDuration(minutes / 60.0); // Convert to hours
 	    
 		return flightRepo.save(flight);
@@ -65,12 +95,21 @@ public class FlightService {
 	}
 	
 	//for booking and search feature
-	public List<Flight> searchFlightsByCode(String departureCode, String arrivalCode) {
-	    return flightRepo.findByDepartureAirportCodeAndArrivalAirportCode(departureCode, arrivalCode);
-	}
+//	public List<Flight> searchFlightsByCode(String departureCode, String arrivalCode) {
+//	    return flightRepo.findByDepartureAirportCodeAndArrivalAirportCode(departureCode, arrivalCode);
+//	}
+	
 	//search feature for city and date
 	public List<Flight> searchFlights(String departureCity, String arrivalCity, LocalDate departureDate) {
-	    return flightRepo.findByDepCityAndArrivalCityAndDepDate(departureCity, arrivalCity, departureDate );
+	    LocalDateTime startOfDay = departureDate.atStartOfDay();
+	    LocalDateTime startOfNextDay = departureDate.plusDays(1).atStartOfDay();
+	    
+	    return flightRepo.findByDepCityAndArrivalCityAndDepDate(
+	        departureCity, 
+	        arrivalCity, 
+	        startOfDay, 
+	        startOfNextDay
+	    );
 	}	
 	
 	

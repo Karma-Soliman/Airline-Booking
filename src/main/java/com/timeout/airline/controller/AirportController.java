@@ -10,7 +10,7 @@ import com.timeout.airline.entity.Airport;
 import com.timeout.airline.service.AirportService;
 
 @RestController
-@RequestMapping("/api/airport")
+@RequestMapping("/airport")
 public class AirportController {
 	@Autowired
 	private AirportService airportService;

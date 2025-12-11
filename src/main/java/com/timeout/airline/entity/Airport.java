@@ -3,6 +3,8 @@ package com.timeout.airline.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "airports")
 public class Airport {
@@ -27,10 +29,12 @@ public class Airport {
     
     //flights departing from this airport
     @OneToMany(mappedBy = "departureAirport")
+    @JsonIgnore
     private List<Flight> departingFlights;
    
     //flights arriving to this airport
     @OneToMany(mappedBy = "arrivalAirport")
+    @JsonIgnore
     private List<Flight> arrivalFlights;
     
     

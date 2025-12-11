@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.timeout.airline.entity.Plane;
 import com.timeout.airline.service.PlaneService;
 @RestController
-@RequestMapping("/api/plane")
+@RequestMapping("/plane")
 public class PlaneController {
 	@Autowired
 	private PlaneService planeService;
@@ -31,6 +31,12 @@ public class PlaneController {
 	public ResponseEntity<Plane> getPlaneById(@PathVariable Long id){
 		Plane plane = planeService.getPlaneById(id);
 		return ResponseEntity.ok(plane);
+	} 
+	
+	@GetMapping("/type/{type}")
+	public ResponseEntity<Plane> getPlaneByType(@PathVariable String type){
+		Plane planeType = planeService.getPlaneByType(type);
+		return ResponseEntity.ok(planeType);
 	} 
 	
 	//if we decide to add scheduling

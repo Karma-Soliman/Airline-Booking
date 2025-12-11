@@ -31,6 +31,11 @@ public class PlaneService {
 	return planeRepo.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Plane not found with id: " + id));
 	}
+	
+	public Plane getPlaneByType(String type){
+	return planeRepo.findByType(type)
+				.orElseThrow(() -> new ResourceNotFoundException("Plane not found with this type: " + type));
+	}
 	//Scheduling
 //	public List<Plane> getAvailablePlanes(LocalDateTime start, LocalDateTime end){
 //		return planeRepo.findAvailablePlanes(start, end);
@@ -40,6 +45,7 @@ public class PlaneService {
 	public Plane updatePlane(Long id, Plane planeInfo) {
 		Plane plane = getPlaneById(id);
 		plane.setCapacity(planeInfo.getCapacity());
+		plane.setType(planeInfo.getType());
 	
 		return planeRepo.save(plane);
 	}

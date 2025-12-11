@@ -13,15 +13,15 @@ public class Flight {
     private Long idFlight;
     
     @ManyToOne
-    @JoinColumn(name = "departure_airport_id", nullable = false)
+    @JoinColumn(name = "departure_airport_code", nullable = false)
     private Airport departureAirport;
     
     @ManyToOne
-    @JoinColumn(name = "arrival_airport_id", nullable = false)
+    @JoinColumn(name = "arrival_airport_code", nullable = false)
     private Airport arrivalAirport;
     
     @ManyToOne
-    @JoinColumn(name = "plane_id", nullable = false)
+    @JoinColumn(name = "plane_type", nullable = false)
     private Plane plane;
     
     @Column(nullable = false, unique = true)

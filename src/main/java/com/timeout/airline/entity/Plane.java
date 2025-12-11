@@ -3,6 +3,8 @@ package com.timeout.airline.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "planes")
 public class Plane {
@@ -15,10 +17,22 @@ public class Plane {
     @Column(nullable = false)
     private int capacity;
     
+
+	@Column(nullable = false)
+    private String type;
+    
     @OneToMany(mappedBy = "plane")
+    @JsonIgnore
     private List<Flight> flights;
     	
-    	
+        public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}	
     public Long getIdPlane() {
 		return idPlane;
 	}
