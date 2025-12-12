@@ -35,6 +35,33 @@ public class Flight {
     
     @Column(nullable = true)
     private Double duration;
+    
+    @Column(nullable = false)
+    private Integer seats;
+    
+    @Column(nullable = true)
+    private Integer firstClassSeats;
+    
+    @Column(nullable = true)
+    private Integer premiumClassSeats;
+    
+    @Column(nullable = true)
+    private Integer businessClassSeats;
+    
+    @Column(nullable = true)
+    private Integer economyClassSeats;
+    
+    @Column(nullable = true)
+    private Double firstClassPrice;
+    
+    @Column(nullable = true)
+    private Double premiumClassPrice;
+    
+    @Column(nullable = true)
+    private Double businessClassPrice;
+    
+    @Column(nullable = true)
+    private Double economyClassPrice;
  
 //    @Column(nullable = true)
 //    private String status;
@@ -45,6 +72,78 @@ public class Flight {
     
     public Long getIdFlight() {
 		return idFlight;
+	}
+
+	public Integer getSeats() {
+		return seats;
+	}
+
+	public void setSeats(Integer seats) {
+		this.seats = seats;
+	}
+
+	public Integer getFirstClassSeats() {
+		return firstClassSeats;
+	}
+
+	public void setFirstClassSeats(Integer firstClassSeats) {
+		this.firstClassSeats = firstClassSeats;
+	}
+
+	public Integer getPremiumClassSeats() {
+		return premiumClassSeats;
+	}
+
+	public void setPremiumClassSeats(Integer premiumClassSeats) {
+		this.premiumClassSeats = premiumClassSeats;
+	}
+
+	public Integer getBusinessClassSeats() {
+		return businessClassSeats;
+	}
+
+	public void setBusinessClassSeats(Integer businessClassSeats) {
+		this.businessClassSeats = businessClassSeats;
+	}
+
+	public Integer getEconomyClassSeats() {
+		return economyClassSeats;
+	}
+
+	public void setEconomyClassSeats(Integer economyClassSeats) {
+		this.economyClassSeats = economyClassSeats;
+	}
+
+	public Double getFirstClassPrice() {
+		return firstClassPrice;
+	}
+
+	public void setFirstClassPrice(Double firstClassPrice2) {
+		this.firstClassPrice = firstClassPrice2;
+	}
+
+	public Double getPremiumClassPrice() {
+		return premiumClassPrice;
+	}
+
+	public void setPremiumClassPrice(Double premiumClassPrice) {
+		this.premiumClassPrice = premiumClassPrice;
+	}
+
+	public Double getBusinessClassPrice() {
+		return businessClassPrice;
+	}
+
+	public void setBusinessClassPrice(Double businessClassPrice) {
+		this.businessClassPrice = businessClassPrice;
+	}
+
+	public Double getEconomyClassPrice() {
+		return economyClassPrice;
+	}
+
+	public void setEconomyClassPrice(Double economyClassPrice) {
+		this.economyClassPrice = economyClassPrice;
 	}
 
 	public void setIdFlight(Long idFlight) {

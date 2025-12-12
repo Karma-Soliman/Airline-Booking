@@ -39,15 +39,42 @@ public class FlightService {
 
 	        Plane plane = planeRepo.findByType(dto.planeType)
 	            .orElseThrow(() -> new IllegalArgumentException("Invalid plane type: " + dto.planeType));
+	        
+	        Integer totalSeats = (dto.firstClassSeats != null ? dto.firstClassSeats : 0) +
+                    (dto.businessClassSeats != null ? dto.businessClassSeats : 0) +
+                    (dto.premiumClassSeats != null ? dto.premiumClassSeats : 0) +
+                    (dto.economyClassSeats != null ? dto.economyClassSeats : 0);
+	        
+	        //makes sure number of seats available is equal to total number of each class.
+	        if (dto.seats != null && !dto.seats.equals(totalSeats)) {
+	        	throw new IllegalArgumentException("Number of seats available does not match total number of seats");
+	        }
+	        // makes sure total number of seats is not more than the capacity of the plane.
+	        if (totalSeats > plane.getCapacity()) {
+	        	 throw new IllegalArgumentException("Total number of seats exceeds plane capacity");
+	        }
 
 	        Flight flight = new Flight();
-
+	        //flight scheduling
 	        flight.setFlightNumber(dto.flightNumber);
 	        flight.setDepartureAirport(departure);
 	        flight.setArrivalAirport(arrival);
 	        flight.setPlane(plane);
 	        flight.setDepartureTime(dto.departureTime);
 	        flight.setArrivalTime(dto.arrivalTime);
+	        
+	        //seats & prices
+	        flight.setSeats(dto.seats);
+	        flight.setFirstClassSeats(dto.firstClassSeats);
+	        flight.setPremiumClassSeats(dto.premiumClassSeats);
+	        flight.setBusinessClassSeats(dto.businessClassSeats);
+	        flight.setEconomyClassSeats(dto.economyClassSeats);
+	        flight.setFirstClassPrice(dto.firstClassPrice);
+	        flight.setBusinessClassPrice(dto.businessClassPrice);
+	        flight.setPremiumClassPrice(dto.premiumClassPrice);
+	        flight.setEconomyClassPrice(dto.economyClassPrice);
+	        
+	      
 
 	// 1. check flight number is unique
 		if (flightRepo.findByFlightNumber(dto.flightNumber).isPresent()) {

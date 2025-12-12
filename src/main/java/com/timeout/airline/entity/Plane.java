@@ -20,12 +20,24 @@ public class Plane {
 
 	@Column(nullable = false)
     private String type;
-    
-    @OneToMany(mappedBy = "plane")
+	
+	@Column(nullable = false)
+    private String manYear;
+
+	@OneToMany(mappedBy = "plane")
     @JsonIgnore
     private List<Flight> flights;
-    	
-        public String getType() {
+	
+	
+	public String getManYear() {
+		return manYear;
+	}
+
+	public void setManYear(String manYear) {
+		this.manYear = manYear;
+	}
+	
+    public String getType() {
 		return type;
 	}
 
@@ -61,7 +73,5 @@ public class Plane {
 	public void setFlights(List<Flight> flights) {
 		this.flights = flights;
 	}
-
-
 
 }
