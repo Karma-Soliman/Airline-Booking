@@ -10,7 +10,6 @@ public class Client extends User {
     @Column(unique = true, nullable = false)
     private String numPassport;
 
-    // Constructors
     public Client() {
         super();
     }
@@ -21,12 +20,11 @@ public class Client extends User {
         this.numPassport = numPassport;
     }
 
-    // Getter
     public String getNumPassport() {
         return numPassport;
     }
 
-    // Setter
+    
     public void setNumPassport(String numPassport) {
         this.numPassport = numPassport;
     }

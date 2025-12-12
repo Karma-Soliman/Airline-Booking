@@ -39,6 +39,29 @@ CREATE TABLE flights (
     CONSTRAINT fk_plane FOREIGN KEY (plane_type) REFERENCES planes(id_plane)
 );
 
+--Create bookings table
+CREATE TABLE bookings (
+    id_reservation BIGSERIAL PRIMARY KEY,
+    id_flight BIGINT NOT NULL,
+    id_client BIGINT NOT NULL,
+    type_of_seat VARCHAR(50) NOT NULL, 
+    reservation_date TIMESTAMP NOT NULL DEFAULT NOW(),
+    CONSTRAINT fk_reservation_flight FOREIGN KEY (id_flight) REFERENCES flights(id_flight),
+    CONSTRAINT fk_reservation_client FOREIGN KEY (id_client) REFERENCES clients(id_user),
+    CONSTRAINT uq_client_flight UNIQUE (id_client, id_flight)
+);
+
+-- Create miles_reward table 
+CREATE TABLE miles_reward (
+    id_miles_reward BIGSERIAL PRIMARY KEY,
+    id_client BIGINT NOT NULL,
+    id_flight BIGINT NOT NULL,
+    booking_date TIMESTAMP NOT NULL,
+    discount_code VARCHAR(50), 
+    CONSTRAINT fk_reward_client FOREIGN KEY (id_client) REFERENCES clients(id_user),
+    CONSTRAINT fk_reward_flight FOREIGN KEY (id_flight) REFERENCES flights(id_flight)
+);
+
 -- Create indexes for better performance
 CREATE INDEX idx_flights_departure_airport ON flights(departure_airport_code);
 CREATE INDEX idx_flights_arrival_airport ON flights(arrival_airport_code);
