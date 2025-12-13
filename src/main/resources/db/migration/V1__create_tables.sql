@@ -39,15 +39,22 @@ CREATE TABLE flights (
     CONSTRAINT fk_plane FOREIGN KEY (plane_type) REFERENCES planes(id_plane)
 );
 
+-- Create clients table
+CREATE TABLE clients (
+    id_client BIGSERIAL PRIMARY KEY,
+    passport_number VARCHAR(50) NOT NULL UNIQUE
+);
+
+
 --Create bookings table
 CREATE TABLE bookings (
     id_reservation BIGSERIAL PRIMARY KEY,
     id_flight BIGINT NOT NULL,
     id_client BIGINT NOT NULL,
-    type_of_seat VARCHAR(50) NOT NULL, 
+    type_of_seat VARCHAR(50) NOT NULL,
     reservation_date TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_reservation_flight FOREIGN KEY (id_flight) REFERENCES flights(id_flight),
-    CONSTRAINT fk_reservation_client FOREIGN KEY (id_client) REFERENCES clients(id_user),
+    CONSTRAINT fk_booking_flight FOREIGN KEY (id_flight) REFERENCES flights(id_flight),
+    CONSTRAINT fk_booking_client FOREIGN KEY (id_client) REFERENCES clients(id_client),
     CONSTRAINT uq_client_flight UNIQUE (id_client, id_flight)
 );
 
@@ -57,8 +64,8 @@ CREATE TABLE miles_reward (
     id_client BIGINT NOT NULL,
     id_flight BIGINT NOT NULL,
     booking_date TIMESTAMP NOT NULL,
-    discount_code VARCHAR(50), 
-    CONSTRAINT fk_reward_client FOREIGN KEY (id_client) REFERENCES clients(id_user),
+    discount_code VARCHAR(50),
+    CONSTRAINT fk_reward_client FOREIGN KEY (id_client) REFERENCES clients(id_client),
     CONSTRAINT fk_reward_flight FOREIGN KEY (id_flight) REFERENCES flights(id_flight)
 );
 
