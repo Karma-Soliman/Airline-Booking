@@ -2,6 +2,9 @@ package com.timeout.airline.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -24,7 +27,17 @@ public class Flight {
     @JoinColumn(name = "plane_type", nullable = false)
     private Plane plane;
     
-    @Column(nullable = false, unique = true)
+    @OneToMany(mappedBy = "flight")
+    @JsonIgnore
+    private List<Book> bookings;
+    
+    @OneToMany(mappedBy = "flight")
+    @JsonIgnore
+    private List<MilesReward> milesRewards;
+    
+
+
+	@Column(nullable = false, unique = true)
     private String flightNumber;
 
     @Column(nullable = false)
@@ -66,10 +79,21 @@ public class Flight {
 //    @Column(nullable = true)
 //    private String status;
     
-    
-//    @OneToMany(mappedBy = "flight")
-//    private List<Booking> bookings;
-    
+    public List<Book> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Book> bookings) {
+		this.bookings = bookings;
+	}
+
+	public List<MilesReward> getMilesRewards() {
+		return milesRewards;
+	}
+
+	public void setMilesRewards(List<MilesReward> milesRewards) {
+		this.milesRewards = milesRewards;
+	}
     public Long getIdFlight() {
 		return idFlight;
 	}

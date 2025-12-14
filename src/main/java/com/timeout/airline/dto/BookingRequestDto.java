@@ -14,8 +14,12 @@ public class BookingRequestDto {
     private LocalDateTime arrivalHour;
     private String flightNumber;
     private String typeOfSeat; 
+    private LocalDate bookingDate; 
+    private String discountCode;
     
-    // Optional fields for creating new client
+
+
+	// Optional fields for creating new client
     private String email;
     private String phone;
     private String address;
@@ -42,7 +46,14 @@ public class BookingRequestDto {
         this.phone = phone;
         this.address = address;
     }
+    public String getDiscountCode() {
+		return discountCode;
+	}
 
+	public void setDiscountCode(String discountCode) {
+		this.discountCode = discountCode;
+	}
+	
     public String getLastname() {
         return lastname;
     }
@@ -146,4 +157,12 @@ public class BookingRequestDto {
     public void setAddress(String address) {
         this.address = address;
     }
+
+	public LocalDate getBookingDate() {
+		return bookingDate;
+	}
+
+	public void setBookingDate(LocalDate bookingDate) {
+		this.bookingDate = bookingDate;
+	}
 }
