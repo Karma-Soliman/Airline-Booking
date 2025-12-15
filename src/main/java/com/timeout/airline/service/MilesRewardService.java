@@ -49,15 +49,30 @@ public class MilesRewardService {
             return prefix + "-" + randomPart;
         }
      
-  public String getClientDiscountCode(Book booking) {
-     Integer currentYear = LocalDate.now().getYear();
-      List<MilesReward> rewards = milesRewardRepo.findDiscountCodeByClientAndYear(booking.getClient().getNumPassport(), currentYear);
-      
-         if (!rewards.isEmpty()) {
-             return rewards.get(0).getDiscountCode();
-         }
-         return null;
+     public List<MilesReward> getClientMilesRewards(String passportNumber) {
+         Integer currentYear = LocalDate.now().getYear();
+         return milesRewardRepo.findByClientNumPassportAndYear(passportNumber, currentYear);
      }
+     
+
+     public Long getClientFlightCountByPassport(String passportNumber) {
+         Integer currentYear = LocalDate.now().getYear();
+         return milesRewardRepo.countFlightsByClientAndYear(passportNumber, currentYear);
+     }
+     
+     public String getClientDiscountCode(Book booking) {
+         return getClientDiscountCodeByPassport(booking.getClient().getNumPassport());
+     }
+  
+  public String getClientDiscountCodeByPassport(String passportNumber) {
+      Integer currentYear = LocalDate.now().getYear();
+      List<MilesReward> rewards = milesRewardRepo.findDiscountCodeByClientAndYear(passportNumber, currentYear);
+      
+      if (!rewards.isEmpty() && rewards.get(0).getDiscountCode() != null) {
+          return rewards.get(0).getDiscountCode();
+      }
+      return null;
+  }
     
      // Get flight count for current year
      public Long getClientFlightCount(Book booking) {
