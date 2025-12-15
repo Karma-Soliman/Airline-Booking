@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timeout Airline</title>
+    <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>                        
+	      </button>
+	      <a class="navbar-brand" href="#">TimeOut Airline</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="myNavbar">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Home</a></li>
+	        <li><a href="#">Book</a></li>
+	        <li><a href="#">Contact</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+<section class="hero">
+
+	<div class="jumbotron">
+	  <div class="container text-center">
+    <h1>The world is closer than you think</h1>
+    <p>Book your next journey with Timeout Airline</p>
+	  </div>
+	</div>
+</section>
+
+<brsection class="search-box">
+	<div class="row">
+	       <input type="text" id="from" placeholder="From">
+	       <input type="text" id="to" placeholder="To">
+	   </div>
+       <br>
+	   <div class="row">
+	       <input type="date" id="date">
+	       <button onclick="searchFlights()">Search flights</button>
+	   </div>
+</section>
+
+<section class="results" id="results"></section>
+
+<script src="js/script.js"></script>
+</body>
+</html>
