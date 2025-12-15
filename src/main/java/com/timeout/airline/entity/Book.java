@@ -12,11 +12,11 @@ public class Book {
     private Long idReservation;
     
     @ManyToOne
-    @JoinColumn(name = "flight_number", nullable = false)
+    @JoinColumn(name = "id_flight", nullable = false)
     private Flight flight;
     
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "id_client", nullable = false)
     private Client client;
     
     @Column(nullable = false)

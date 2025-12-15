@@ -12,27 +12,60 @@ public class MilesReward {
     private Long id;
     
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "id_client", nullable = false)
     private Client client;
     
     @ManyToOne
-    @JoinColumn(name = "flight_number", nullable = false)
+    @JoinColumn(name = "id_flight", nullable = false)
     private Flight flight;
     
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDate bookingDate;
+    
+    @Column(nullable = true)
+    private String discountCode;
+
+   
+	@Column(nullable = true)
+    private Boolean discountUsed;
+    
+    @Column(nullable = false)
+    private Integer year;
 
     public MilesReward() {
+    	this.discountUsed = false;
+        this.year = LocalDate.now().getYear();
     }
-
+//maybe add Book booking
     public MilesReward(Long id, Client client, Flight flight, LocalDate date) {
         this.id = id;
         this.client = client;
         this.flight = flight;
-        this.date = date;
+        this.bookingDate = date;
+        // this.booking = booking;
     }
 
-    public Long getId() {
+    
+    public String getDiscountCode() {
+		return discountCode;
+	}
+	public void setDiscountCode(String discountCode) {
+		this.discountCode = discountCode;
+	}
+
+	public Boolean getDiscountUsed() {
+		return discountUsed;
+	}
+	public void setDiscountUsed(Boolean discountUsed) {
+		this.discountUsed = discountUsed;
+	}
+	public Integer getYear() {
+		return year;
+	}
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+	public Long getId() {
         return id;
     }
 
@@ -45,7 +78,7 @@ public class MilesReward {
     }
 
     public LocalDate getDate() {
-        return date;
+        return bookingDate;
     }
 
     public void setId(Long id) {
@@ -61,6 +94,6 @@ public class MilesReward {
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.bookingDate = date;
     }
 }

@@ -4,13 +4,12 @@ import com.timeout.airline.dto.BookingRequestDto;
 import com.timeout.airline.entity.Book;
 import com.timeout.airline.entity.Client;
 import com.timeout.airline.entity.Flight;
-import com.timeout.airline.entity.MilesReward; 
 import com.timeout.airline.exception.ResourceNotFoundException;
 import com.timeout.airline.exception.ValidationException; 
 import com.timeout.airline.repository.BookRepository;
 import com.timeout.airline.repository.ClientRepository;
 import com.timeout.airline.repository.FlightRepository;
-import com.timeout.airline.repository.MilesRewardRepository; 
+import com.timeout.airline.service.MilesRewardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +31,7 @@ public class BookingService {
     private FlightRepository flightRepository;
     
     @Autowired
-    private MilesRewardRepository milesRewardRepository; 
+    private MilesRewardService milesRewardService;
     
  
     @Transactional
@@ -77,7 +76,7 @@ public class BookingService {
         if (!isValidSeatType(seatType)) {
             throw new ValidationException(
                 "Invalid seat type: " + request.getTypeOfSeat() + 
-                ". Must be: FIRST, PREMIUM, BUSINESS, or ECONOMICS");
+                ". Must be: FIRST, PREMIUM, BUSINESS, or ECONOMY");
         }
         
         //  Create booking
@@ -86,18 +85,13 @@ public class BookingService {
         booking.setFlight(flight);
         booking.setTypeOfSeat(seatType);
         booking.setBookingDate(LocalDate.now());
-        booking = bookRepository.save(booking);
+  
         
+        Book savedBooking = bookRepository.save(booking);
         
-        // Record in MilesReward 
-        MilesReward reward = new MilesReward();
-        reward.setClient(client);
-        reward.setFlight(flight);
-        reward.setDate(LocalDate.now());
-        milesRewardRepository.save(reward);
+        milesRewardService.recordFlight(savedBooking);
         
-        
-        return booking;
+        return savedBooking;
     }
     
     // Helper: Create new client if doesn't exist
@@ -128,7 +122,7 @@ public class BookingService {
         return seatType.equals("FIRST") || 
                seatType.equals("PREMIUM") || 
                seatType.equals("BUSINESS") || 
-               seatType.equals("ECONOMICS");
+               seatType.equals("ECONOMY");
     }
     
     //  Get all bookings
