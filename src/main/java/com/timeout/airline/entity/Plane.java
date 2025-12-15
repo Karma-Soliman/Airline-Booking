@@ -22,7 +22,7 @@ public class Plane {
     private String type;
 	
 	@Column(nullable = false)
-    private int manYear;
+    private int year_man;
 
 	@OneToMany(mappedBy = "plane")
     @JsonIgnore
@@ -30,11 +30,11 @@ public class Plane {
 	
 	
 	public int getManYear() {
-		return manYear;
+		return year_man;
 	}
 
-	public void setManYear(int manYear) {
-		this.manYear = manYear;
+	public void setManYear(int year_man) {
+		this.year_man = year_man;
 	}
 	
     public String getType() {
