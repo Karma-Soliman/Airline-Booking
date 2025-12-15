@@ -22,18 +22,18 @@ public class Plane {
     private String type;
 	
 	@Column(nullable = false)
-    private String manYear;
+    private int manYear;
 
 	@OneToMany(mappedBy = "plane")
     @JsonIgnore
     private List<Flight> flights;
 	
 	
-	public String getManYear() {
+	public int getManYear() {
 		return manYear;
 	}
 
-	public void setManYear(String manYear) {
+	public void setManYear(int manYear) {
 		this.manYear = manYear;
 	}
 	
